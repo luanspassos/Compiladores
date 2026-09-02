@@ -1,0 +1,35 @@
+# --- Binários / executáveis ---
+*.exe
+*.out
+*.app
+
+# --- Objetos e arquivos intermediários (MSVC / cl.exe) ---
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.idb
+
+# --- Objetos e arquivos intermediários (gcc / clang) ---
+*.o
+*.a
+*.so
+*.dylib
+
+# --- Pastas de build comuns ---
+build/
+bin/
+Debug/
+Release/
+x64/
+x86/
+
+# --- Arquivos de IDE ---
+.vscode/
+.vs/
+*.suo
+*.user
+
+# --- Diversos ---
+*.log
