@@ -1,0 +1,10 @@
+exemplos/erros/escopo.ssl:1:33: erro escopo: identificador 'a' ja declarado neste escopo
+exemplos/erros/escopo.ssl:3:24: erro escopo: identificador 'a' ja declarado neste escopo
+exemplos/erros/escopo.ssl:5:12: erro escopo: identificador 'x' ja declarado neste escopo
+exemplos/erros/escopo.ssl:6:9: erro escopo: identificador 'a' ja declarado neste escopo
+exemplos/erros/escopo.ssl:7:5: erro escopo: identificador 'y' nao declarado
+exemplos/erros/escopo.ssl:7:9: erro escopo: identificador 'z' nao declarado
+exemplos/erros/escopo.ssl:8:9: erro escopo: identificador 'soma' nao declarado
+exemplos/erros/escopo.ssl:13:9: erro escopo: identificador 'interna' nao declarado
+exemplos/erros/escopo.ssl:17:10: erro escopo: identificador 'f' ja declarado neste escopo
+9 erro(s); nenhum codigo gerado

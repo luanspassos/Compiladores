@@ -1,0 +1,43 @@
+type vetor = array [3] of integer
+type ponto = struct { x: integer; y: integer }
+type v1 = array [3] of integer
+
+function g(a: integer, b: char): integer
+{
+    var r: integer;
+    r = a;
+    return r;
+}
+
+function f(n: integer): integer
+{
+    var x, y: integer;
+    var s: string;
+    var v: vetor;
+    var w: v1;
+    var p: ponto;
+    var b: boolean;
+    var tipo: x;
+    x = "texto";
+    b = x + true;
+    if (x) y = 1;
+    while (s) y = 2;
+    x = -s;
+    b = !x;
+    x = p.z;
+    x = y.campo;
+    x = y[0];
+    x = v["a"];
+    x = v[0].k;
+    v = w;
+    x = g(1);
+    x = g(1, 'c', 3);
+    x = g('c', 'c');
+    x = x(1);
+    g = 3;
+    s = s * 2;
+    b = p == p;
+    break;
+    continue;
+    return "fim";
+}

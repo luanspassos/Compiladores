@@ -1,0 +1,3 @@
+exemplos/erros/lexico.ssl:4:11: erro lexico: '&' isolado (esperado '&&')
+exemplos/erros/lexico.ssl:5:9: erro lexico: numeral grande demais
+exemplos/erros/lexico.ssl:5:21: erro lexico: caractere invalido '@'

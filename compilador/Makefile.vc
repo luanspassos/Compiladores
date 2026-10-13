@@ -1,0 +1,4 @@
+# Testes da VC (lexer original, na raiz do repositorio); chamado por 'make test' do compilador/
+test:
+	$(CXX) -std=c++17 -Wall -Wextra -o tests/test_main.out tests/test_main.cpp lexer.cpp
+	./tests/test_main.out

@@ -1,0 +1,2 @@
+exemplos/erros/sintatico.ssl:5:5: erro sintatico: encontrado 'return' "return"; esperado: ';', '&&', '||', '<', '>', '<=', '>=', '!=', '==', '+', '-', '*', '/'
+1 erro(s); nenhum codigo gerado

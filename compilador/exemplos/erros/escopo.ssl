@@ -1,0 +1,22 @@
+type par = struct { a: integer; a: char }
+
+function f(a: integer, a: integer): integer
+{
+    var x, x: integer;
+    var a: integer;
+    y = z + z;
+    x = soma(1);
+    {
+        var interna: integer;
+        interna = 1;
+    }
+    x = interna;
+    return x;
+}
+
+function f(b: integer): integer
+{
+    var r: integer;
+    r = b;
+    return r;
+}

@@ -1,0 +1,34 @@
+type ponto = struct { x: integer; y: integer }
+type retangulo = struct { origem: ponto; tamanho: ponto; nome: string }
+type inteiro = integer
+type pontos = array [4] of ponto
+
+function area(r: retangulo): inteiro
+{
+    var a: inteiro;
+    a = r.tamanho.x * r.tamanho.y;
+    return a;
+}
+
+function desloca(r: retangulo, dx: integer, dy: integer): retangulo
+{
+    var t: integer;
+    r.origem.x = r.origem.x + dx;
+    r.origem.y = r.origem.y + dy;
+    return r;
+}
+
+function somaX(p: pontos): integer
+{
+    var i, s: integer;
+    i = 0;
+    s = 0;
+    while (i < 4)
+    {
+        var tmp: ponto;
+        tmp = p[i];
+        s = s + tmp.x;
+        i = i + 1;
+    }
+    return s;
+}

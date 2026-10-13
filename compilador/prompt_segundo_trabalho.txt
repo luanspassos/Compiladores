@@ -1,0 +1,81 @@
+Você está trabalhando na continuação (VF) do trabalho da disciplina de Compiladores (Prof. Luiz Guedes – IME).
+
+A primeira parte (VC) já foi entregue: um analisador léxico em C++11 para a Simple Script Language (SSL), na pasta `analisador/`, gerado a partir do prompt `prompt_primeiro_trabalho.txt`.
+
+O enunciado da VF é:
+
+> "Sintático
+>  Escopo
+>  Tipo
+>  E pra VF geração de código"
+> "É a continuação do trabalho da VC."
+
+Ou seja: a partir do analisador léxico da VC, construir o compilador completo da SSL com análise sintática, análise de escopo, análise de tipos e geração de código.
+
+## Fontes
+
+1. `Gramática.pdf` – gramática oficial da linguagem (fonte primária da sintaxe).
+2. `Compiladoresv1.2.3_analise-lexica.pdf` – capítulo 2 do livro do professor (já usado na VC).
+3. `C:\Users\joaop\Downloads\Compiladoresv1.2.3.pdf` – livro completo do professor. Os capítulos que definem o que a VF deve fazer são:
+   * cap. 3 – Análise Sintática (descendente e ascendente; tabela de ação LR/sLR/LR(1)/la-LR(1));
+   * cap. 4 – Gramática de Atributos (pilha semântica paralela à sintática, função `Semantics(rule)` chamada a cada redução, algoritmo da figura 4.6);
+   * cap. 5 – Análise de Escopo (tabela de símbolos como pilha de blocos, `NewBlock/EndBlock/Define/Search/Find`, não terminais `IDD`/`IDU`, marcador `NB`);
+   * cap. 6 – Análise de Tipos (`kind` dos identificadores, objetos dos tipos pré-definidos, tipo universal, `CheckTypes`, marcadores `MF`, `MC`, regras de atributos de declarações, comandos e expressões);
+   * cap. 7 – Geração de Código (máquina virtual de pilha, conjunto de instruções e pseudo-instruções, código de cada construção, marcadores `NF`, `MF`, `MT`, `ME`, `MW`, tamanhos e endereçamento de variáveis).
+4. `analisador/` – código da VC (lexer, testes, exemplos, README). Deve ser reaproveitado, não reescrito.
+
+## Antes de escrever código
+
+1. Leia integralmente a gramática e os capítulos 3 a 7 do livro.
+2. Leia todo o código da VC e o README com as decisões já tomadas (elas continuam valendo).
+3. Liste as inconsistências entre a gramática, o texto e os exemplos do livro, e decida cada uma com justificativa. Já identificadas:
+   * `'T'` entre aspas em `DC` é o não terminal `T` (decisão da VC);
+   * o capítulo 5 usa `ID` (sem verificação de escopo) no acesso a campo `LV '.' ID`, pois o campo só pode ser resolvido pelo tipo da struct; a gramática diz `IDU`;
+   * os exemplos do capítulo 7 usam `return`, que não existe na gramática; sem ele uma função não tem como devolver valor e, como os parâmetros são passados por valor e não há variáveis globais, nenhum programa teria efeito observável;
+   * `B → '{' LDV LS '}'` exige ao menos uma declaração e um comando por bloco (os exemplos do livro violam isso);
+   * a figura 7.18 chama `NewBlock()` em `MF`, mas o texto diz que `NF` substitui `NB` (os parâmetros precisam de bloco novo antes de `LP`);
+   * a figura 7.27 gera `LOAD_REF` com o tamanho do tipo em vez do índice da variável;
+   * o tipo universal da figura 6.3 tem kind `SCALAR_TYPE_`, o que gera erros em cascata;
+   * as listas por `pNext` (figuras 6.6 a 6.13) misturam parâmetros e variáveis locais do mesmo nível;
+   * o `CheckTypes` estrutural (figura 6.17) entra em laço infinito em structs; o por nome (figura 6.16) torna um alias incompatível com o próprio tipo base;
+   * `true`/`false` geram `LOAD_TRUE`/`LOAD_FALSE` (figura 7.7) ou `LOAD_CONST` sem token secundário (figura 7.26);
+   * `BEGIN_FUNC` deve informar as variáveis incluindo os parâmetros (texto e figura 7.18) ou apenas os locais (exemplos 7.4);
+   * a indexação de string está nas regras de tipos (6.22), mas a geração de código com left-values (7.27) só trata arrays; o livro recomenda `CALL_LIB` para strings em linguagens com tipos estruturados;
+   * `break`/`continue` aparecem na figura 7.5, mas não têm regras de atributos; o `continue` do `do-while` deve ir para a condição (`JMP_FW`).
+4. Altere a linguagem apenas quando for indispensável para que a fase faça sentido, e documente cada alteração.
+
+## Implementação
+
+Linguagem: C++11, como na VC. Não usar bison/yacc/GOLD nem gerador externo: a lógica deve estar no código.
+
+1. **Sintático (cap. 3.8 + 4.1):** analisador ascendente la-LR(1) dirigido por tabela, com o algoritmo da figura 4.6 (`Action[q][a]`, `Len[r]`, `Left[r]`, `Semantics(r)`). Para não montar à mão uma tabela com mais de 90 regras, a tabela é construída pelo próprio programa a partir da gramática (FIRST, closure, goto e fusão de estados com o mesmo núcleo). Os conflitos devem ser contados e mostrados: o único esperado é o do else pendente, resolvido por empilhar. Em erro sintático, informe linha, coluna, token encontrado e tokens esperados.
+2. **Escopo (cap. 5):** tabela de símbolos como pilha de níveis; `IDD` (declaração, erro de redeclaração no nível corrente) e `IDU` (uso, erro de não declarado em todos os níveis visíveis); `NB` em struct e em bloco-comando; `NF` na função (parâmetros e locais no mesmo nível, nome da função no nível externo, recursão permitida).
+3. **Tipos (cap. 6):** kinds, tipos pré-definidos, tipo universal para evitar erros em cascata, declarações (var, param, field, array, struct, alias, function), expressões, condições booleanas, atribuição, left-values (campo, índice, string → char), chamadas (`MC`, quantidade e tipo dos argumentos) e retorno.
+4. **Geração de código (cap. 7):** assembly textual da máquina virtual do livro, na versão com left-values, porque a linguagem tem arrays e structs: `LOAD_REF`, `ADD n`, `MUL n`, `DE_REF n`, `STORE_REF n`, `LOAD_CONST`, operadores, `TJMP_FW/JMP_FW/JMP_BW/TJMP_BW` com rótulos `Ln`, `CALL n`, `RET`, `BEGIN_FUNC n, p, v`/`END_FUNC`. Calcule tamanhos (escalar = 1, array = n·elem, struct = soma dos campos) e endereços (parâmetros a partir de 0, locais em seguida e com numeração contínua entre blocos da mesma função). Só emita código se não houver nenhum erro (equivalente ao `ERROR_FLAG` do livro).
+5. **Integração:** preservar a VC intacta em `analisador/` e criar `compilador/` reaproveitando o lexer. Manter um modo `--tokens` com a saída da VC. Lexer → parser → semântica; erros léxicos impedem a análise sintática; erros de escopo e tipo são acumulados, sem parar no primeiro.
+
+## Verificação
+
+* Um único executável de testes com `assert` ou verificação manual: a tabela LALR tem exatamente 1 conflito empilha/reduz e 0 reduz/reduz; programas válidos compilam sem erro; cada erro sintático, de escopo e de tipo tem um caso que o dispara; o código gerado para exemplos pequenos é comparado com a saída esperada, calculada à mão segundo as figuras 7.4 a 7.10.
+* Exemplos `.ssl` válidos (incluindo versões dos exemplos 7.4 do livro reescritos para obedecer à gramática) e exemplos com erros.
+* Compilar com `-Wall -Wextra -Wpedantic` sem avisos e rodar todos os testes da VC e da VF.
+
+## Estrutura da resposta (README do `compilador/`)
+
+1. Entendimento: o que cada fase faz e como se relaciona com os capítulos.
+2. Gramática efetivamente usada (com marcadores semânticos e a extensão `return`), com a justificativa de cada diferença em relação à gramática oficial.
+3. Análise sintática: construção la-LR(1), estatísticas da tabela, tratamento do else pendente, mensagens de erro.
+4. Análise de escopo: estrutura e regras.
+5. Análise de tipos: kinds, compatibilidade e lista de erros.
+6. Geração de código: instruções usadas, esquema de cada construção, endereçamento.
+7. Decisões e ambiguidades (a lista acima e as que surgirem).
+8. Como compilar, executar e testar.
+9. Exemplos de entrada e saída (código gerado e erros).
+
+## Regras
+
+* Não reimplementar o léxico; corrigir apenas o necessário (palavra reservada `return`).
+* Não inventar instruções da máquina virtual além das do livro. Onde o livro manda usar `CALL_LIB`, documentar a numeração escolhida.
+* Seguir a estrutura de código do livro (pilha semântica, `Semantics` com switch por regra, marcadores), adaptando a C++ só onde isso simplifica (vetores em vez de listas encadeadas, objetos em memória estável).
+* Código mínimo, legível e acadêmico. Nada de abstrações sem uso.
+* Ao final, revisar se toda regra da gramática tem ação semântica e se toda regra de atributos dos capítulos 5 a 7 foi implementada ou teve a omissão justificada.

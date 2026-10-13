@@ -1,0 +1,7 @@
+function f(a: integer): integer
+{
+    var x: integer;
+    x = a & 1;
+    x = 99999999999 @ 2;
+    return x;
+}

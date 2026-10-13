@@ -1,0 +1,24 @@
+exemplos/erros/tipos.ssl:20:15: erro tipo: 'x' nao e um tipo
+exemplos/erros/tipos.ssl:21:16: erro tipo: tipos incompativeis
+exemplos/erros/tipos.ssl:22:13: erro tipo: tipos incompativeis
+exemplos/erros/tipos.ssl:23:10: erro tipo: expressao do tipo boolean esperada
+exemplos/erros/tipos.ssl:24:13: erro tipo: expressao do tipo boolean esperada
+exemplos/erros/tipos.ssl:25:10: erro tipo: tipo invalido para o operador
+exemplos/erros/tipos.ssl:26:10: erro tipo: tipo invalido para o operador
+exemplos/erros/tipos.ssl:27:11: erro tipo: campo 'z' nao existe na struct
+exemplos/erros/tipos.ssl:28:11: erro tipo: acesso a campo em algo que nao e struct
+exemplos/erros/tipos.ssl:29:12: erro tipo: indexacao de algo que nao e array nem string
+exemplos/erros/tipos.ssl:30:14: erro tipo: indice deve ser do tipo integer
+exemplos/erros/tipos.ssl:31:14: erro tipo: acesso a campo em algo que nao e struct
+exemplos/erros/tipos.ssl:32:10: erro tipo: tipos incompativeis
+exemplos/erros/tipos.ssl:33:12: erro tipo: argumentos de menos na chamada de 'g'
+exemplos/erros/tipos.ssl:34:19: erro tipo: argumentos demais na chamada de 'g'
+exemplos/erros/tipos.ssl:35:11: erro tipo: tipo incompativel com o parametro 1 de 'g'
+exemplos/erros/tipos.ssl:36:9: erro tipo: 'x' nao e funcao
+exemplos/erros/tipos.ssl:37:5: erro tipo: 'g' nao e variavel nem parametro
+exemplos/erros/tipos.ssl:38:13: erro tipo: tipos incompativeis
+exemplos/erros/tipos.ssl:39:14: erro tipo: tipo invalido para o operador
+exemplos/erros/tipos.ssl:40:10: erro tipo: 'break' fora de um comando de repeticao
+exemplos/erros/tipos.ssl:41:13: erro tipo: 'continue' fora de um comando de repeticao
+exemplos/erros/tipos.ssl:42:17: erro tipo: tipo do return incompativel com o tipo de retorno da funcao
+23 erro(s); nenhum codigo gerado

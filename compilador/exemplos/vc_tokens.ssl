@@ -1,0 +1,12 @@
+type ponto = struct { x: integer; y: integer }
+function soma(a: integer, b: ponto): string
+{
+    var i, j: integer;
+    var c: char;
+    c = 'a';
+    i = (a + 1) * 2 - j / 3;
+    if (i <= 10 && !(j != 2) || i >= 3) i = i + 1; else j = j - 1;
+    while (i < 100) i++;
+    do --j; while (j > 0);
+    b.x = "texto";
+}

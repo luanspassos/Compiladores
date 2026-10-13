@@ -1,0 +1,53 @@
+function somaImpares(n: integer): integer
+{
+    var i, s: integer;
+    i = 0;
+    s = 0;
+    while (true)
+    {
+        var t: integer;
+        i = i + 1;
+        if (i > n)
+            break;
+        if (i / 2 * 2 == i)
+            continue;
+        s = s + i;
+    }
+    return s;
+}
+
+function multiplo3(n: integer): integer
+{
+    var i: integer;
+    i = 0;
+    do
+    {
+        var t: integer;
+        i = i + 1;
+        if (i == 2)
+            continue;
+        if (i > n)
+            break;
+    } while (i / 3 * 3 != i);
+    return i;
+}
+
+function maximo(a: integer, b: integer): integer
+{
+    var m: integer;
+    if (a > b)
+        m = a;
+    else
+        m = b;
+    return m;
+}
+
+function fib(n: integer): integer
+{
+    var r: integer;
+    if (n < 2)
+        r = n;
+    else
+        r = fib(n - 1) + fib(n - 2);
+    return r;
+}

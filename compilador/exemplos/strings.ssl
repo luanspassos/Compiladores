@@ -1,0 +1,35 @@
+function strcmp(s1: string, s2: string, n: integer): integer
+{
+    var i: integer;
+    i = 0;
+    while (i < n && s1[i] == s2[i])
+        i = i + 1;
+    if (i == n)
+        return 0;
+    if (s1[i] < s2[i])
+        return -1;
+    return 1;
+}
+
+function inverte(s: string, n: integer): string
+{
+    var i, j: integer;
+    var c: char;
+    i = 0;
+    j = n - 1;
+    while (i < j)
+    {
+        var tmp: integer;
+        c = s[i];
+        s[i++] = s[j];
+        s[j--] = c;
+    }
+    return s;
+}
+
+function junta(a: string, b: string): string
+{
+    var r: string;
+    r = a + "-" + b;
+    return r;
+}
