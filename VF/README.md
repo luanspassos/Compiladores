@@ -6,8 +6,7 @@ passada de um analisador ascendente, **análise sintática**, **análise de
 escopo**, **análise de tipos** e **geração de código** para a máquina virtual
 de pilha do capítulo 7 do livro.
 
-A VC continua intacta na raiz do repositório (`../lexer.cpp`, `../main.cpp`,
-`../tests/`); nesta pasta fica uma cópia do léxico com as poucas correções
+A VC continua intacta em `../VC/` (`lexer.cpp`, `main.cpp`, `tests/`); nesta pasta fica uma cópia do léxico com as poucas correções
 listadas na seção 7. Tudo é C++11, sem bison/yacc/GOLD: a tabela de análise é
 construída pelo próprio programa a partir da gramática.
 
@@ -377,7 +376,7 @@ Itens 1–13 são os levantados no enunciado; 14 em diante surgiram durante a im
 ## 8. Como compilar, executar e testar
 
 ```
-cd compilador
+cd VF
 make                      # g++ -std=c++11 -Wall -Wextra -Wpedantic -O2  → ./ssl e tests/test_compilador
 ./ssl exemplos/fatorial.ssl            # assembly na saída padrão
 ./ssl exemplos/fatorial.ssl -o f.asm   # ... ou em arquivo
@@ -530,4 +529,4 @@ reduzida (`IDU`: o próprio identificador; uma atribuição: o `;`).
 
 ## Prompt utilizado
 
-O prompt desta etapa está em `prompt_segundo_trabalho.txt`; a VC usou o prompt documentado em `../README.md`.
+O prompt desta etapa está em `prompt_segundo_trabalho.txt`; a VC usou o prompt documentado em `../VC/README.md`.

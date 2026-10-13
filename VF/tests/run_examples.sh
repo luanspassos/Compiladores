@@ -3,7 +3,7 @@
 #   exemplos/*.ssl        -> devem compilar; codigo igual a exemplos/esperado/<nome>.asm
 #   exemplos/erros/*.ssl  -> devem falhar (codigo de saida 1), sem gerar codigo;
 #                            mensagens iguais a exemplos/esperado/erros/<nome>.txt
-#   --tokens              -> mesma saida do lexer da VC (../main.cpp) em exemplos/vc_tokens.ssl
+#   --tokens              -> mesma saida do lexer da VC (../VC/main.cpp) em exemplos/vc_tokens.ssl
 # Com a opcao --atualiza, regrava os arquivos esperados (revise-os antes de commitar).
 cd "$(dirname "$0")/.." || exit 1
 tmp=$(mktemp -d) || exit 1
@@ -39,8 +39,8 @@ for f in exemplos/erros/*.ssl; do
     check "$f" "$tmp/$n.err" "exemplos/esperado/erros/$n.txt"
 done
 
-if [ -f ../lexer.cpp ] && [ -f ../main.cpp ]; then
-    g++ -std=c++17 -o "$tmp/vc" ../main.cpp ../lexer.cpp 2>/dev/null &&
+if [ -f ../VC/lexer.cpp ] && [ -f ../VC/main.cpp ]; then
+    g++ -std=c++17 -o "$tmp/vc" ../VC/main.cpp ../VC/lexer.cpp 2>/dev/null &&
     "$tmp/vc" exemplos/vc_tokens.ssl > "$tmp/vc.txt" 2>/dev/null
     ./ssl --tokens exemplos/vc_tokens.ssl > "$tmp/vf.txt" 2>/dev/null
     if ! cmp -s "$tmp/vc.txt" "$tmp/vf.txt"; then echo "FALHA: --tokens difere da VC"; diff "$tmp/vc.txt" "$tmp/vf.txt" | head; fail=1; fi
